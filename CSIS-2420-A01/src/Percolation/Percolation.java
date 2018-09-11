@@ -11,7 +11,7 @@ public class Percolation {
 	// create N­by­N grid, with all sites blocked
 	public Percolation(int N) {
 		
-		if (N <= 0) {
+		if (n < 0) {
 			throw new IllegalArgumentException("N cannot be negative or 0");
 		}
 		
@@ -41,8 +41,8 @@ public class Percolation {
 	// open site (row i, column j) if it is not open already
 	public void open(int i, int j) {
 		
-		if (i < 0 || i >= N || j < 0 || j >= N) {
-			throw new IndexOutOfBoundsException("i or j is not between 0 and " + (N-1));
+		if (i < 0 || i >= n || j < 0 || j >= n) {
+			throw new IndexOutOfBoundsException("i or j is not between 0 and " + (n-1));
 		}
 		
 		site[i][j] = true;
@@ -69,8 +69,8 @@ public class Percolation {
 	// is site (row i, column j) open?
 	public boolean isOpen(int i, int j) {
 		
-		if (i < 0 || i >= N || j < 0 || j >= N) {
-			throw new IndexOutOfBoundsException("i or j is not between 0 and " + (N-1));
+		if (i < 0 || i >= n || j < 0 || j >= n) {
+			throw new IndexOutOfBoundsException("i or j is not between 0 and " + (n-1));
 		}
 		
 		return site[i][j];
@@ -79,8 +79,8 @@ public class Percolation {
 	// is site (row i, column j) full?
 	public boolean isFull(int i, int j) {
 		
-		if (i < 0 || i >= N || j < 0 || j >= N) {
-			throw new IndexOutOfBoundsException("i or j is not between 0 and " + (N-1));
+		if (i < 0 || i >= n || j < 0 || j >= n) {
+			throw new IndexOutOfBoundsException("i or j is not between 0 and " + (n-1));
 		}
 		
 		if (isOpen(i, j) == true) {
@@ -88,7 +88,6 @@ public class Percolation {
 	    } else {
 			return false;
 		}
-		
 		
 	}
 	
