@@ -1,3 +1,5 @@
+// Kyle Fackrell, Whitney Smith
+
 package Percolation;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;

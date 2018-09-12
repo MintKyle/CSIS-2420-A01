@@ -1,3 +1,5 @@
+// Kyle Fackrell, Whitney Smith
+
 package Percolation;
 
 public class PercolationStats {
