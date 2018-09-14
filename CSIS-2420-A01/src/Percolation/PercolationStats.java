@@ -3,11 +3,12 @@ package Percolation;
 
 import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class PercolationStats {
 
-	int experiments;
-	double[] openedAverages;
+	private int experiments;
+	private double[] openedAverages;
 
 	public PercolationStats(int N, int T) {
 		// perform T independent experiments on a grid
@@ -15,7 +16,24 @@ public class PercolationStats {
 			throw new IllegalArgumentException("Error: Negative number.");
 		}
 		experiments = T;
-		//openedAverages = runExperiment(N, T);
+		openedAverages = new double[T];
+
+		// A loop that runs through T experiments and tracks results
+		for (int i = 0; i < experiments; i++) {
+			Percolation experiment = new Percolation(N);
+			int openSites = 0;
+
+			while (!experiment.percolates()) {
+				int random = StdRandom.uniform(N);
+				int secondRandom = StdRandom.uniform(N);
+				if (!experiment.isOpen(random, secondRandom)) {
+					experiment.open(random, secondRandom);
+					openSites += 1;
+				}
+			}
+			// Record results of an experiment
+			openedAverages[i] = ((double)openSites) / (N * N);
+		}
 	}
 
 	public double mean() {
@@ -30,20 +48,20 @@ public class PercolationStats {
 
 	public double confidenceLow() {
 		// low endpoint of 95% confidence interval
-		return mean() - StdStats.stddev(openedAverages);
+		return (mean() - ((1.96 * stddev()) / Math.sqrt(experiments)));
 	}
 
 	public double confidenceHigh() {
 		// high endpoint of 95% confidence interval
-		return mean() + StdStats.stddev(openedAverages);
+		return (mean() + ((1.96 * stddev()) / Math.sqrt(experiments)));
 	}
 
 	// a main() to test the PercolationStats class
 	public static void main(String[] args) {
 
-		PercolationStats test = new PercolationStats(200, 100);
+		PercolationStats test = new PercolationStats(2, 1000);
 
-		System.out.println("Results:\n");
+		StdOut.println("----------Results----------");
 		StdOut.println("Mean: " + test.mean());
 		StdOut.println("Standard Deviation: " + test.stddev());
 		StdOut.println("Confidence Low: " + test.confidenceLow());
